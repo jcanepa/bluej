@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=MapTester
+comment0.text=\n\ This\ class\ tests\ capabilities\ of\ Java's\ HashMap\ construct.\n\n\ @author\ Julian\ Canepa\n\ @version\ Feb\ 21,\ 2021\n
+comment1.params=
+comment1.target=MapTester()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ MapTester\n
+comment2.params=name\ phone
+comment2.target=void\ enterNumber(java.lang.String,\ java.lang.String)
+comment3.params=name
+comment3.target=java.lang.String\ lookupNumber(java.lang.String)
+comment3.text=\n\ Get\ a\ given\ contact's\ phone\ number.\n\ \n\ @return\ The\ number\ to\ which\ the\ given\ name\ is\ matched\ |\ null\ when\ the\ name\ contains\ no\ mapping.\n
+comment4.params=name
+comment4.target=boolean\ contactExists(java.lang.String)
+comment4.text=\n\ Detuermine\ if\ the\ given\ name\ is\ a\ stored\ contact.\n
+comment5.params=
+comment5.target=void\ printContactList()
+comment5.text=\n\ Provide\ a\ Set\ view\ of\ all\ contacts.\n
+numComments=6

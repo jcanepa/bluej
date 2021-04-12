@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Compass
+comment0.text=\n\ A\ static\ class\ that\ tracks\ map\ movement\ orientation.\n\n\ @author\ Julian\ Canepa\n\ @version\ April\ 12,\ 2021\n
+comment1.params=
+comment1.target=Compass()
+comment2.params=direction
+comment2.target=java.lang.String\ getReciprocal(java.lang.String)
+comment2.text=\n\ Return\ the\ opposite\ of\ a\ given\ direction.\n
+numComments=3

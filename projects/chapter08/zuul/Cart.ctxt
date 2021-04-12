@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Cart
+comment0.text=\n\ The\ cart\ belongs\ to\ a\ user\ and\ holds\ items.\n\n\ @author\ Julian\ Canepa\n\ @version\ April\ 12,\ 2021\n
+comment1.params=
+comment1.target=Cart()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Cart\n
+comment2.params=
+comment2.target=int\ getItemCount()
+comment3.params=item
+comment3.target=void\ addItem(Item)
+comment4.params=index
+comment4.target=Item\ removeItem(int)
+comment5.params=index
+comment5.target=Item\ getItem(int)
+comment6.params=
+comment6.target=int\ getTotalPrice()
+numComments=7

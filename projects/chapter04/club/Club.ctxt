@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=Club
+comment0.text=\n\ Store\ details\ of\ club\ members.\n\ \n\ @author\ Julian\ Canepa\n\ @version\ Feb\ 21,\ 2021\n
+comment1.params=
+comment1.target=Club()
+comment2.params=member
+comment2.target=void\ join(Member)
+comment2.text=\n\ Add\ a\ new\ member\ to\ the\ club's\ list\ of\ members.\n\ @param\ member\ The\ member\ object\ to\ be\ added.\n
+comment3.params=
+comment3.target=int\ numberOfMembers()
+comment3.text=\n\ @return\ The\ number\ of\ members\ (Member\ objects)\ in\ the\ club.\n
+comment4.params=month
+comment4.target=int\ joinedInMonth(int)
+comment4.text=\n\ Deturmine\ enrollment\ numbers\ of\ a\ given\ month.\n\ \n\ @param\ month\n\ @return\ The\ number\ of\ new\ members\ who\ enrolled\ in\ said\ month.\n
+comment5.params=month\ year
+comment5.target=java.util.ArrayList\ purge(int,\ int)
+comment5.text=\n\ Remove\ members\ who\ enrolled\ in\ a\ given\ month\ and\ year.\n\ Return\ them\ in\ a\ separate\ collection.\n\ \n\ @param\ month\n\ @param\ year\n\ @return\ The\ members\ who\ have\ been\ removed.\n
+numComments=6

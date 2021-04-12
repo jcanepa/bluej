@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=RandomTester
+comment1.params=
+comment1.target=RandomTester()
+comment2.params=
+comment2.target=void\ printOneRandom()
+comment3.params=amount
+comment3.target=void\ printMultiRandom(int)
+comment4.params=
+comment4.target=int\ throwDie()
+comment4.text=\n\ Return\ a\ number\ between\ 1\ and\ 6.\n
+comment5.params=
+comment5.target=java.lang.String\ getResponse()
+comment5.text=\n\ Return\ a\ random\ response.\n
+comment6.params=max
+comment6.target=int\ randomNumberUpTo(int)
+comment7.params=min\ max
+comment7.target=int\ randomNumberBetween(int,\ int)
+comment7.text=\n\ Return\ a\ random\ number\ within\ the\ given\ minimum\ and\ maximum.\n
+numComments=8

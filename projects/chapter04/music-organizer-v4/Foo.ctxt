@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Foo
+comment1.params=
+comment1.target=Foo()
+comment2.params=
+comment2.target=void\ multiplesOfFive()
+comment2.text=\n\ Print\ the\ multiples\ of\ five\ between\ ten\ and\ ninety-five.\n
+comment3.params=
+comment3.target=void\ exercise_4_31()
+comment3.text=\n\ Add\ up\ the\ values\ between\ 0\ and\ ten.\n
+comment4.params=a\ b
+comment4.target=void\ sum(int,\ int)
+comment4.text=\n\ Sum\ the\ numbers\ between\ two\ integers.\n
+comment5.params=n
+comment5.target=boolean\ isPrime(int)
+comment5.text=\n\ Deturmine\ if\ a\ given\ integer\ is\ a\ prime\ number.\n
+numComments=6

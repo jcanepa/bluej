@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=TwelveHourClockDisplay
+comment0.text=\n\ A\ 12-hour\ kind\ of\ ClockDisplay.\n\n\ @author\ Julian\ Canepa\n\ @updated\ Feb\ 5,\ 2021\n
+comment1.params=
+comment1.target=TwelveHourClockDisplay()
+comment2.params=hour\ minute
+comment2.target=TwelveHourClockDisplay(int,\ int)
+comment3.params=
+comment3.target=void\ updateDisplay()
+comment3.text=\n\ Update\ the\ display\ of\ the\ 12-hour\ clock.\n\ Overwrites\ super\ class\ method\ of\ the\ same\ name.\n
+comment4.params=
+comment4.target=void\ timeTick()
+comment4.text=\n\ Increment\ the\ clock\ by\ one\ minute.\n\ Overwrites\ super\ class\ method\ of\ the\ same\ name.\n
+comment5.params=hour\ minute
+comment5.target=void\ setTime(int,\ int)
+comment5.text=\n\ Set\ the\ time\ by\ the\ specified\ hour\ and\ minute,\ updating\ the\ time\ of\ day\ field.\n\ Overwrites\ super\ class\ method\ of\ the\ same\ name.\n
+numComments=6
