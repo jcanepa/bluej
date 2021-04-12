@@ -1,3 +1,4 @@
 .DS_Store
 BlueJ.app
-projects/JLayer1.0.1/*
+projects/*
+!projects/chapter*
