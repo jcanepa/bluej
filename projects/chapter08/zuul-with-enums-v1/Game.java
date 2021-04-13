@@ -116,6 +116,10 @@ public class Game
             case GO:
                 goRoom(command);
                 break;
+                
+            case LOOK:
+                System.out.println("These are not the droids you're looking for.");
+                break;
 
             case QUIT:
                 wantToQuit = quit(command);
