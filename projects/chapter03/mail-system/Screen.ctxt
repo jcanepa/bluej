@@ -1,9 +1,0 @@
-#BlueJ class context
-comment0.target=Screen
-comment1.params=xRes\ yRes
-comment1.target=Screen(int,\ int)
-comment2.params=
-comment2.target=int\ numberOfPixels()
-comment3.params=invert
-comment3.target=void\ clear(boolean)
-numComments=4

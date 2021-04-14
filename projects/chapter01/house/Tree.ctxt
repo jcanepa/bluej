@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.target=Tree
-comment0.text=\n\ This\ class\ models\ a\ fir\ tree.\n\n\ @author\ Julian\ Canepa\n\ @date\ Feb\ 5,\ 2021\n
-comment1.params=
-comment1.target=Tree()
-comment2.params=
-comment2.target=void\ setup()
-numComments=3
