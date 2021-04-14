@@ -2,3 +2,6 @@
 BlueJ.app
 projects/*
 !projects/chapter*
+projects/chapter*/*.class
+projects/chapter*/*.ctxt
+projects/chapter*/*.class
