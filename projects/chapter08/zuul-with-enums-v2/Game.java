@@ -115,6 +115,10 @@ public class Game
                 goRoom(command);
                 break;
 
+            case LOOK:
+                System.out.println("Look around the room");
+                break;
+
             case QUIT:
                 wantToQuit = quit(command);
                 break;

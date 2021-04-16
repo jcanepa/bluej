@@ -40,10 +40,12 @@ public class Game
         printWelcome();
 
         boolean finished = false;
+        int moves = 0;
 
-        while (! finished) {
+        while (! finished && moves < 15) {
             Command command = parser.getCommand();
             finished = processCommand(command);
+            moves = tracker.getMoves();
         }
         
         System.out.println("Thank you for playing.  Good bye.");
@@ -119,7 +121,12 @@ public class Game
         } else if (commandWord.equals("drop")) {
             dropItem(command);
             
-        } 
+        } else if (commandWord.equals("equip")) {
+            shopper.equipBeamer();
+            
+        } else if (commandWord.equals("fire")) {
+            shopper.fireBeamer();
+        }
         
         // The command wasn't recognized
         return wantToQuit;

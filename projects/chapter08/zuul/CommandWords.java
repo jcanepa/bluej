@@ -12,7 +12,7 @@
 public class CommandWords
 {
     private static final String[] validCommands = {
-        "go", "quit", "help", "search", "wallet", "back", "take", "drop"
+        "go", "quit", "help", "search", "wallet", "back", "take", "drop", "equip", "fire"
     };
 
     /**

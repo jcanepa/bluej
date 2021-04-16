@@ -184,4 +184,12 @@ public class Room
     {
         return getExit(direction) != null;
     }
+    
+    /**
+     * @Override
+     */
+    public String toString()
+    {
+        return getDescription();
+    }
 }

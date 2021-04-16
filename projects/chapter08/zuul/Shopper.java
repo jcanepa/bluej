@@ -13,6 +13,9 @@ public class Shopper
     private Room location;
     private final Cart cart;
     
+    // transporter shit
+    private Room origin;
+    
     public Shopper(Room startingPosition)
     {
         wallet = 1200;
@@ -151,5 +154,21 @@ public class Shopper
     public boolean hasExceededCartValueLimit()
     {
         return getCartTotal() > (2 * getWallet());
+    }
+    
+    /**
+     * Remeber where the beamer was equipped.
+     */
+    public void equipBeamer()
+    {
+        origin = location;
+    }
+    
+    /**
+     * Execute the beamer.
+     */
+    public void fireBeamer()
+    {
+        setLocation(origin);
     }
 }

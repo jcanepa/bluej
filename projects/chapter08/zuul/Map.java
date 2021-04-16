@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * The map is responsible for the store's layout.
  * It builds all the rooms, defines their exits and the items they contain.
@@ -8,32 +10,91 @@
 public class Map
 {
     private Room entrance;
+    private Room[][] layout;
 
     public Map()
     {
-        createLayout();
+        layout = new Room[][] {
+            new Room[] {
+                new Room("Appliances"),
+                new Room("Athletic"),
+                new Room("Audio"),
+                new TransporterRoom()
+            },
+            new Room[] {
+                new Room("Bedroom"),
+                new Room("Bathroom"),
+                new Room("Baby"),
+            },
+            new Room[] {
+                new Room("Checkout"),
+                new Room("Camping"),
+                new Room("Computer"),
+            }
+        };
+        
+        setEntrance(layout[2][0]);
     }
     
+    /**
+     * Add rooms to the map's layout.
+     */
+    private void connectRooms()
+    {
+        int col = 0;
+
+        for (Room[] row : layout) {
+            
+            col ++;
+            
+            for (Room room : row) {
+                
+                
+                /*
+                 * check if there's a room above this one, if so add a north door
+                 * check if there's a room below this one, if so add a south door
+                 * check if there's a room east this one, if so add a east door
+                 * check if there's a room west this one, if so add a west door
+                 */
+                
+                
+            }
+            System.out.println();
+        }
+    }
+    
+    /**
+     * Print the map.
+     */
+    public void printLayout()
+    {
+        for (Room[] row : layout) {
+            for (Room room : row) {
+                System.out.print(room + " ");
+            }
+            System.out.println();
+        }
+    }
     /**
      * Create all the rooms and link their exits together.
      * Place items around the map.
      */
-    private void createLayout()
+    private void createRooms()
     {
-        // create the store's departments
-        final Room appliances, athletics, audio;
-        final Room bedroom, bath, baby;
-        final Room checkout, camping, computers;
+        // create the store's departments and initialize their exits
+        final var transporter = new TransporterRoom();
         
-        appliances = new Room("Appliances (north west)");
-        athletics = new Room("Athletic clothing & sports (north center)");
-        audio = new Room("Audio department (north east)");
-        bedroom = new Room("Bedroom furnishings (mid west)");
-        bath = new Room("Bathroom & fixures (mid center)");
-        baby = new Room("Baby, children & toys (mid east)");
-        checkout = new Room("The register queue. Ready to checkout?");
-        camping = new Room("Camping supplies (south center)");
-        computers = new Room("Computer and electronics (south east)");
+        final var appliances = new Room("Appliances (north west)");
+        final var athletics = new Room("Athletic clothing & sports (north center)");
+        final var audio = new Room("Audio department (north east)");
+        final var bedroom = new Room("Bedroom furnishings (mid west)");
+        final var bath = new Room("Bathroom & fixures (mid center)");
+        final var baby = new Room("Baby, children & toys (mid east)");
+        final var checkout = new Room("The register queue. Ready to checkout?");
+        final var camping = new Room("Camping supplies (south center)");
+        final var computers = new Room("Computer and electronics (south east)");
+        
+        Room firedoor = new Room("Fire door is a one-way exit. You are locked out!");
 
         // initialise room's exits
         appliances.setExit("east", athletics);
@@ -42,6 +103,7 @@ public class Map
         athletics.setExit("east", audio);
         athletics.setExit("south", bath);
         athletics.setExit("west", appliances);
+        athletics.setExit("north", firedoor);
         
         audio.setExit("south", baby);
         audio.setExit("west", athletics);
@@ -80,6 +142,14 @@ public class Map
         checkout.addItem("Gift card", -100);
         
         entrance = checkout;
+    }
+
+    /**
+     * Set the entrance point of the store.
+     */
+    private void setEntrance(Room room)
+    {
+        entrance = room;
     }
 
     /**
