@@ -9,13 +9,13 @@ import java.util.Iterator;
  * NOTE: The current version is incomplete! Currently, only code dealing with customer 
  * comments is here.
  * 
- * @author Michael Kölling and David J. Barnes
- * @version 0.1 (2016.02.29)
+ * @author Julian Canepa
+ * @version April 16, 2021
  */
 public class SalesItem
 {
     private String name;
-    private int price;  // in cents
+    private int price;
     private ArrayList<Comment> comments;
     
     /**
@@ -37,7 +37,7 @@ public class SalesItem
     }
     
     /**
-     * Return the price of this item.
+     * Return the price of this item in cents.
      */
     public int getPrice()
     {
@@ -61,15 +61,18 @@ public class SalesItem
      */
     public boolean addComment(String author, String text, int rating)
     {
-        if(ratingInvalid(rating)) {  // reject invalid ratings
+        // reject invalid ratings
+        if (ratingInvalid(rating)) {
             return false;
         }
         
-        if(findCommentByAuthor(author) != null) {  // reject mutiple comments by same author
+        // reject mutiple comments by same author
+        if (findCommentByAuthor(author) != null) {
             return false;
         }
         
-        comments.add(new Comment(author, text, rating));
+        comments.add(
+            new Comment(author, text, rating));
         return true;
     }
     
@@ -78,7 +81,8 @@ public class SalesItem
      */
     public void removeComment(int index)
     {
-        if(index >=0 && index < comments.size()) { // if index is valid
+        // test index is valid
+        if (index > 0 && index < comments.size()) {
             comments.remove(index);
         }
     }
@@ -89,7 +93,8 @@ public class SalesItem
      */
     public void upvoteComment(int index)
     {
-        if(index >=0 && index < comments.size()) { // if index is valid
+        // test index is valid
+        if (index >=0 && index < comments.size()) {
             comments.get(index).upvote();
         }
     }
@@ -100,7 +105,8 @@ public class SalesItem
      */
     public void downvoteComment(int index)
     {
-        if(index >=0 && index < comments.size()) { // if index is valid
+        // test index is valid
+        if (index >=0 && index < comments.size()) {
             comments.get(index).downvote();
         }
     }
@@ -115,7 +121,7 @@ public class SalesItem
         System.out.println("Price: " + priceString(price));
         System.out.println();
         System.out.println("Customer comments:");
-        for(Comment comment : comments) {
+        for (Comment comment : comments) {
             System.out.println("-------------------------------------------");
             System.out.println(comment.getFullDetails());
         }
@@ -132,12 +138,15 @@ public class SalesItem
     {
         Iterator<Comment> it = comments.iterator();
         Comment best = it.next();
-        while(it.hasNext()) {
+        
+        while (it.hasNext()) {
             Comment current = it.next();
-            if(current.getVoteCount() > best.getVoteCount()) {
+
+            if (current.getVoteCount() > best.getVoteCount()) {
                 best = current;
             }
         }
+        
         return best;
     }
     
@@ -157,11 +166,12 @@ public class SalesItem
      */
     private Comment findCommentByAuthor(String author)
     {
-        for(Comment comment : comments) {
-            if(comment.getAuthor().equals(author)) {
+        for (Comment comment : comments) {
+            if (comment.getAuthor().equals(author)) {
                 return comment;
             }
         }
+
         return null;
     }
     
@@ -174,10 +184,11 @@ public class SalesItem
     {
         int dollars = price / 100;
         int cents = price - (dollars*100);
-        if(cents <= 9) {
-            return "$" + dollars + ".0" + cents;  // include zero padding if necessary
-        }
-        else {
+
+        if (cents <= 9) {
+            // include zero padding if necessary
+            return "$" + dollars + ".0" + cents;
+        } else {
             return "$" + dollars + "." + cents;
         }
     }
