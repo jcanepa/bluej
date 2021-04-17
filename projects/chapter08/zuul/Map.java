@@ -3,6 +3,7 @@ import java.util.ArrayList;
 /**
  * The map is responsible for the store's layout.
  * It builds all the rooms, defines their exits and the items they contain.
+ * The map only supports a rectangle grid layouts with no empty roooms in between.
  *
  * @author Julian Canepa
  * @version April 9, 2021
@@ -19,7 +20,6 @@ public class Map
                 new Room("Appliances"),
                 new Room("Athletic"),
                 new Room("Audio"),
-                new TransporterRoom()
             },
             new Room[] {
                 new Room("Bedroom"),
@@ -33,33 +33,72 @@ public class Map
             }
         };
         
+        connectRooms();
+        
         setEntrance(layout[2][0]);
+        
+        // add items to various rooms
     }
     
     /**
-     * Add rooms to the map's layout.
+     * Build exits between rooms.
      */
     private void connectRooms()
     {
-        int col = 0;
-
-        for (Room[] row : layout) {
+        for (int row = 0; row < layout.length; row++) {
             
-            col ++;
-            
-            for (Room room : row) {
+            for (int col = 0; col < layout[row].length; col++) {
                 
+                Room room = layout[row][col];
                 
                 /*
-                 * check if there's a room above this one, if so add a north door
-                 * check if there's a room below this one, if so add a south door
-                 * check if there's a room east this one, if so add a east door
-                 * check if there's a room west this one, if so add a west door
+                 * north exit
                  */
+                if (!isOnNorthWall(room)) {
+                    
+                    // add an exit to the room above
+                    room.setExit(
+                        "north", 
+                        layout[row - 1][col]
+                    );
+                }
+
+                /*
+                 * east exit
+                 */
+                if (!isOnEastWall(room)) {
+                    
+                    // add an exit to the room below
+                    room.setExit(
+                        "east", 
+                        layout[row][col + 1]
+                    );
+                }
                 
+                /*
+                 * south exit
+                 */
+                if (!isOnSouthWall(room)) {
+                    
+                    // add an exit to the room below
+                    room.setExit(
+                        "south", 
+                        layout[row + 1][col]
+                    );
+                }
                 
+                /*
+                 * west exit
+                 */
+                if (!isOnWestWall(room)) {
+                    
+                    // add an exit to the room below
+                    room.setExit(
+                        "west", 
+                        layout[row][col - 1]
+                    );
+                }
             }
-            System.out.println();
         }
     }
     
@@ -69,9 +108,11 @@ public class Map
     public void printLayout()
     {
         for (Room[] row : layout) {
+
             for (Room room : row) {
-                System.out.print(room + " ");
+                System.out.print(room);
             }
+
             System.out.println();
         }
     }
@@ -158,5 +199,61 @@ public class Map
     public Room getEntrance()
     {
         return entrance;
+    }
+    
+    /**
+     * Deturmine if a given room is in the first row.
+     */
+    private boolean isOnNorthWall(Room room)
+    {
+        for (Room northRoom : layout[0]) {
+            if (northRoom == room) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+        /**
+     * Deturmine if a given room is in the last row.
+     */
+    private boolean isOnSouthWall(Room room)
+    {
+        for (Room southRoom : layout[2]) {
+            if (southRoom == room) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+        /**
+     * Deturmine if a given room is in the first row.
+     */
+    private boolean isOnEastWall(Room room)
+    {
+        for (int i = 0; i < 3; i++) {
+            if (layout[i][2] == room) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+        /**
+     * Deturmine if a given room is in the first row.
+     */
+    private boolean isOnWestWall(Room room)
+    {
+        for (int i = 0; i < 3; i++) {
+            if (layout[i][0] == room) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

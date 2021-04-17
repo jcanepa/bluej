@@ -190,6 +190,6 @@ public class Room
      */
     public String toString()
     {
-        return getDescription();
+        return getDescription() + " (" + getExitDirections() + ")\n";
     }
 }
