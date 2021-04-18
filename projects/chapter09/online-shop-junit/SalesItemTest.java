@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.Optional;
 
 /**
  * The test class SalesItemTest.
@@ -121,6 +122,7 @@ public class SalesItemTest
         );
     }
     
+    @Test
     public void mostHelpfulCommentReturned()
     {
         SalesItem item = new SalesItem("Wrench", 2000);
@@ -139,7 +141,51 @@ public class SalesItemTest
             item.findMostHelpfulComment()
         );
     }
+
+    @Test
+    public void nullReturnedWhenCommentsHaveNoVotes()
+    {
+        SalesItem item = new SalesItem("Lightbulb", 500);
+
+        assertEquals(
+            null,
+            item.findMostHelpfulComment()
+        );
+    }
+
+    @Test
+    public void mostHelpfulCommentWhenNoVotesExist()
+    {
+        SalesItem item = new SalesItem("Boots", 25000);
+        item.addComment("A", "I love these boots!", 5);
+        Comment mostHelpful = item.findMostHelpfulComment();
+        
+        assertEquals(
+            mostHelpful,
+            item.findMostHelpfulComment()
+        );
+    }
     
+    @Test
+    public void mostHelpfulCommentWhenVotesTied()
+    {
+        SalesItem item = new SalesItem("Toilet", 20000);
+        
+        item.addComment("A", "Okay", 3);
+        Comment first = item.findMostHelpfulComment();
+        
+        item.addComment("B", "Cool", 3);
+        
+        item.upvoteComment(0);
+        item.upvoteComment(1);
+        
+        assertEquals(
+            first,
+            item.findMostHelpfulComment()
+        );
+    }
+    
+    @Test
     public void commentCount()
     {
         assertEquals(
@@ -148,6 +194,7 @@ public class SalesItemTest
         );
     }
     
+    @Test
     public void itemCreatedWithNoComments()
     {
         SalesItem item = new SalesItem("Knife", 1000);
@@ -158,6 +205,7 @@ public class SalesItemTest
         );
     }
     
+    @Test
     public void itemGetNumberOfCommentsMatchesCount()
     {
         SalesItem item = new SalesItem("Shovel", 3900);
@@ -166,18 +214,21 @@ public class SalesItemTest
         
         for (int i = 0; i < count; i ++) {
             item.addComment(
-                "" + i, 
+                "Author_" + i, 
                 "Test", 
-                i
+                3
             );
         }
         
+        int num = item.getNumberOfComments();
+        
         assertEquals(
-            item.getNumberOfComments(),
-            count
+            count,
+            item.getNumberOfComments()
         );
     }
-    
+
+    @Test
     public void itemUpvotesMatchUpvotes()
     {
         SalesItem item = new SalesItem("Bucket", 500);
@@ -202,7 +253,3 @@ public class SalesItemTest
         );
     }
 }
-
-
-
-

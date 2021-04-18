@@ -70,18 +70,16 @@ public class Comment
     }
     
     /**
-     * Return the full text and details of the comment, including 
-     * the comment text, author and rating.
+     * Return the full text and details of the comment.
+     * Include comment text, author and rating.
      */
     public String getFullDetails()
     {
         String details = "Rating: " + "*****".substring(0,rating) + "    "
                          + "By: " + author + "\n"
                          + "    " + text + "\n";
-        // Note: 'votes' is currently included for testing purposes only. In the final
-        // application, this will nt be shown. Instead, the vote count will be used to 
-        // select and order the comments on screen.
         details += "(Voted as helpful: " + votes + ")\n";
+
         return details;
     }
 }

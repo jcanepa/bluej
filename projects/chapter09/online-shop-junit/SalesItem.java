@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.Comparator;
 
 /**
  * The class represents sales items on an online e-commerce site (such as Amazon.com).
@@ -130,6 +132,12 @@ public class SalesItem
         System.out.println("===========================================");
     }
     
+    @Override
+    public String toString()
+    {
+        return name + " " + priceString(price);
+    }
+    
     /**
      * Return the most helpful comment. The most useful comment is the one with the highest vote
      * balance. If there are multiple comments with equal highest balance, return any one of
@@ -137,6 +145,7 @@ public class SalesItem
      */
     public Comment findMostHelpfulComment()
     {
+        /*
         Iterator<Comment> it = comments.iterator();
         Comment best = it.next();
         
@@ -149,6 +158,12 @@ public class SalesItem
         }
         
         return best;
+        */
+       
+        return comments.stream()
+                      .max(Comparator.comparing(
+                          comment -> comment.getVoteCount()))
+                      .orElse(null);
     }
     
     /**
@@ -162,11 +177,11 @@ public class SalesItem
     
     /**
      * Find the comment by the author with the given name.
-     * 
      * @return The comment if it exists; null if it doesn't.
      */
     private Comment findCommentByAuthor(String author)
     {
+        /*
         for (Comment comment : comments) {
             
             if (comment.getAuthor().equals(author)) {
@@ -175,6 +190,12 @@ public class SalesItem
         }
         
         return null;
+        */
+       
+        return comments.stream()
+                       .filter(comment -> comment.getAuthor().equals(author))
+                       .findFirst()
+                       .orElse(null);
     }
     
     /**
