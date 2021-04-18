@@ -79,8 +79,7 @@ public class SalesItem
      */
     public void removeComment(int index)
     {
-        // if index is valid
-        if (index >=0 && index < comments.size()) {
+        if (isIndexValid(index)) {
             comments.remove(index);
         }
     }
@@ -91,9 +90,7 @@ public class SalesItem
      */
     public void upvoteComment(int index)
     {
-        // if index is valid
-        if (index >=0 && index < comments.size()) {
-            
+        if (isIndexValid(index)) {
             comments.get(index).upvote();
         }
     }
@@ -104,10 +101,14 @@ public class SalesItem
      */
     public void downvoteComment(int index)
     {
-        // if index is valid
-        if (index >=0 && index < comments.size()) {
+        if (isIndexValid(index)) {
             comments.get(index).downvote();
         }
+    }
+    
+    private boolean isIndexValid(int index)
+    {
+        return index >= 0 && index < comments.size();
     }
     
     /**
@@ -177,8 +178,7 @@ public class SalesItem
     }
     
     /**
-     * For a price given as an int, return a readable String representing the same price.
-     * The price is given in whole cents.
+     * For a given int, return a readable String representing the same price in whole cents.
      * For example given a price 12345, "$123.45" is returned.
      */
     private String priceString(int price)
