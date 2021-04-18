@@ -25,6 +25,7 @@ public class SalesItem
     {
         this.name = name;
         this.price = price;
+        
         comments = new ArrayList<>();
     }
 
@@ -147,7 +148,7 @@ public class SalesItem
      */
     private boolean ratingInvalid(int rating)
     {
-        return rating < 0 || rating > 5;
+        return rating < 1 || rating > 5;
     }
     
     /**

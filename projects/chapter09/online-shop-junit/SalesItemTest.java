@@ -11,6 +11,9 @@ import org.junit.Test;
  */
 public class SalesItemTest
 {
+    private SalesItem hammer;
+    private SalesItem nail;
+
     /**
      * Default constructor for test class SalesItemTest
      */
@@ -19,13 +22,17 @@ public class SalesItemTest
     }
 
     /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
+     * Sets up the test fixture. Called before every test case method.
+     * Create two items and add two comments to the first.
      */
     @Before
     public void setUp()
     {
+        hammer = new SalesItem("Hammer", 3000);
+        nail = new SalesItem("Nails", 120);
+        
+        hammer.addComment("A", "Great hammer!", 5);
+        hammer.addComment("B", "Sinks nails and pries nicely.", 4);
     }
 
     /**
@@ -44,9 +51,9 @@ public class SalesItemTest
     @Test
     public void testAddComment()
     {
-        SalesItem salesIte1 = new SalesItem("Brain surgery for Dummies", 21998);
-        assertEquals(true, salesIte1.addComment("James Duckling", "This book is great. I perform brain surgery every week now.", 4));
-        assertEquals(1, salesIte1.getNumberOfComments());
+        SalesItem item = new SalesItem("Brain surgery for Dummies", 21998);
+        assertEquals(true, item.addComment("James Duckling", "This book is great. I perform brain surgery every week now.", 4));
+        assertEquals(1, item.getNumberOfComments());
     }
 
     /**
@@ -55,8 +62,8 @@ public class SalesItemTest
     @Test
     public void testIllegalRating()
     {
-        SalesItem salesIte1 = new SalesItem("Java For Complete Idiots, Vol 2", 19900);
-        assertEquals(false, salesIte1.addComment("Joshua Black", "Not worth the money. The font is too small.", -5));
+        SalesItem item = new SalesItem("Java For Complete Idiots, Vol 2", 19900);
+        assertEquals(false, item.addComment("Joshua Black", "Not worth the money. The font is too small.", -5));
     }
 
     /**
@@ -65,18 +72,137 @@ public class SalesItemTest
     @Test
     public void testInit()
     {
-        SalesItem salesIte1 = new SalesItem("test name", 1000);
-        assertEquals("test name", salesIte1.getName());
-        assertEquals(1000, salesIte1.getPrice());
+        String name = "Test";
+        int price = 1000;
+        
+        SalesItem item = new SalesItem(name, price);
+        
+        assertEquals(name, item.getName());
+        assertEquals(price, item.getPrice());
     }
 
     @Test
     public void addComment()
     {
-        SalesItem salesIte1 = new SalesItem("Brain Surgery for Dummies.", 9899);
-        assertEquals(true, salesIte1.addComment("Fred", "Great - I perform brain surgery every week now!", 4));
+        SalesItem item = new SalesItem("Brain Surgery for Dummies.", 9899);
+        assertEquals(true, item.addComment("Fred", "Great - I perform brain surgery every week now!", 4));
+    }
+
+    /**
+     * Test ratings outside the range of 1-5 are rejected.
+     */
+    @Test
+    public void reviewsWithInvalidRatingsFail()
+    {
+        SalesItem item = new SalesItem("Sweater", 5000);
+        
+        assertEquals(
+            false, 
+            item.addComment("A", "Terrible", 0)
+        );
+        assertEquals(
+            false, 
+            item.addComment("Z", "Excellent", 6)
+        );
+    }
+
+    /**
+     * Only allows one comment per author per sales item.
+     */
+    @Test
+    public void secondCommentByAuthorFails()
+    {
+        SalesItem item = new SalesItem("Book", 1000);
+        item.addComment("J", "Good", 4);
+        
+        assertEquals(
+            false, 
+            item.addComment("J", "Bad", 1)
+        );
+    }
+    
+    public void mostHelpfulCommentReturned()
+    {
+        SalesItem item = new SalesItem("Wrench", 2000);
+        
+        item.addComment("A", "Nice", 4);
+        Comment mostHelpful = item.findMostHelpfulComment();
+        
+        item.addComment("B", "Cool", 3);
+        
+        item.upvoteComment(0);
+        item.upvoteComment(0);
+        item.upvoteComment(1);
+        
+        assertEquals(
+            mostHelpful,
+            item.findMostHelpfulComment()
+        );
+    }
+    
+    public void commentCount()
+    {
+        assertEquals(
+            hammer.getNumberOfComments(),
+            2
+        );
+    }
+    
+    public void itemCreatedWithNoComments()
+    {
+        SalesItem item = new SalesItem("Knife", 1000);
+        
+        assertEquals(
+            item.getNumberOfComments(),
+            0
+        );
+    }
+    
+    public void itemGetNumberOfCommentsMatchesCount()
+    {
+        SalesItem item = new SalesItem("Shovel", 3900);
+        
+        int count = 3;
+        
+        for (int i = 0; i < count; i ++) {
+            item.addComment(
+                "" + i, 
+                "Test", 
+                i
+            );
+        }
+        
+        assertEquals(
+            item.getNumberOfComments(),
+            count
+        );
+    }
+    
+    public void itemUpvotesMatchUpvotes()
+    {
+        SalesItem item = new SalesItem("Bucket", 500);
+        item.addComment("A", "This bucket leaks", 1);
+        
+        int upvotes = 6;
+        int downvotes = 4;
+        
+        for (int i = 0; i < upvotes; i ++) {
+            item.upvoteComment(0);
+        }
+        
+        for (int i = 0; i < downvotes; i ++) {
+            item.downvoteComment(0);
+        }
+        
+        int votes = upvotes - downvotes;
+        
+        assertEquals(
+            item.findMostHelpfulComment().getVoteCount(),
+            votes
+        );
     }
 }
+
 
 
 
