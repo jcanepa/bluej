@@ -1,8 +1,8 @@
 /**
- * The main part of the calculator performing the
- * arithmetic logic of the calculations.
- * @author Hacker T. Largebrain 
- * @version 1.0
+ * The main part of the calculator performing the arithmetic logic of calculations.
+ * 
+ * @author Hacker T. Largebrain
+ * @version April 18, 2021
  */
 public class CalcEngine
 {
@@ -24,8 +24,7 @@ public class CalcEngine
     }
 
     /**
-     * @return The value currently displayed
-     * on the calculator.
+     * @return The value currently displayed on the calculator.
      */
     public int getDisplayValue()
     {
@@ -66,21 +65,25 @@ public class CalcEngine
      */
     public void equals()
     {
-        if(previousOperator == '+') {
+        if (previousOperator == '+') {
             displayValue = leftOperand + displayValue;
-        }
-        else {
+            
+        } else if (previousOperator == '-'){
             displayValue = leftOperand - displayValue;
         }
+        
         leftOperand = 0;
     }
 
     /**
      * The 'C' (clear) button was pressed.
+     * Reset all fields, clearing the state to the object's initial value.
      */
     public void clear()
     {
         displayValue = 0;
+        previousOperator = ' ';
+        leftOperand = 0;
     }
 
     /**
@@ -115,13 +118,15 @@ public class CalcEngine
      */
     private void applyPreviousOperator()
     {
-        if(previousOperator == '+') {
+        if (previousOperator == '+') {
+            
             leftOperand += displayValue;
-        }
-        else if(previousOperator == '-') {
+            
+        } else if(previousOperator == '-') {
+            
             leftOperand -= displayValue;
-        }
-        else {
+            
+        } else {
             // There was no preceding operator.
             leftOperand = displayValue;
         }

@@ -23,9 +23,15 @@ public class CalcEngineTester
     public void testAll()
     {
         System.out.println("Testing the addition operation.");
+        System.out.println("********************************");
         System.out.println("The result is: " + testPlus());
+        System.out.println();
+        
         System.out.println("Testing the subtraction operation.");
+        System.out.println("********************************");
         System.out.println("The result is: " + testMinus());
+        System.out.println();
+        
         System.out.println("All tests passed.");
     }
 
