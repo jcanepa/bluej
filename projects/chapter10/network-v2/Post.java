@@ -65,6 +65,16 @@ public class Post
     {
         return timestamp;
     }
+    
+    /**
+     * Return the author's username.
+     * 
+     * @return The post author's username.
+     */
+    protected String getUsername()
+    {
+        return username;
+    }
 
     /**
      * Display the details of this post.
@@ -113,5 +123,25 @@ public class Post
         else {
             return seconds + " seconds ago";
         }
+    }
+    
+    /**
+     * Return a String of the class name, with a white space between non-leading capital letters.
+     */
+    public String getClassName()
+    {
+        return this.getClass()
+                   .getSimpleName()
+                   .replaceAll(
+                       "(.)([A-Z])", 
+                       "$1 $2");
+    }
+    
+    /**
+     * Print a summary of the post.
+     */
+    public void printShortSummary()
+    {
+        System.out.println( getClassName() + " from " + getUsername());
     }
 }
