@@ -32,7 +32,9 @@ public class Pallet
     public double getWeight()
     {
         int numberOfBricks = bricksInPlane * height;
-        return aBrick.getWeight() * numberOfBricks;
+        
+        //return aBrick.getWeight() * numberOfBricks;
+        return (aBrick.getWeight() * numberOfBricks) + BASE_WEIGHT;
     }
 
     /**
@@ -40,6 +42,7 @@ public class Pallet
      */
     public double getHeight()
     {
-        return (aBrick.getHeight() % height) + BASE_HEIGHT;
+        // return (aBrick.getHeight() % height) + BASE_HEIGHT;
+        return (aBrick.getHeight() * height) + BASE_HEIGHT;
     }
 }

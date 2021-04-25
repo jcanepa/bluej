@@ -7,7 +7,7 @@
 public class Brick
 {
     // Constant.
-    private static final int WEIGHT_PER_CM3 = 2;  // weight per cubic cm in grams
+    private static final int WEIGHT_PER_CM3 = 2;  // weight in grams per cubic cm
 
     private int height;
     private int width;
@@ -34,7 +34,9 @@ public class Brick
         double side1 = width * height;
         double side2 = width * depth;
         double side3 = depth * height;
-        double total = (side1 + side1 + side3) * 2;
+        
+        // double total = (side1 + side1 + side3) * 2;
+        double total = (side1 * 2) + (side2 * 2) + (side3 * 2);
 
         return total;
     }

@@ -1,37 +1,44 @@
 /**
  * The main part of the calculator doing the calculations.
  * 
- * @author: (none yet)
- * @version 0.1 (incomplete)
+ * @author: Julian Canepa
+ * @version April 18, 2021
  */
 public class CalcEngine
 {
-    // Put instance variables here.
+    private int result;
+    private char operator;
+    private int operand;
+    
+    private static final char ADD = '+';
+    private static final char SUB = '-';
 
     /**
      * Create a CalcEngine.
      */
     public CalcEngine()
     {
+        operator = '\u0000'; // null
+        operand = 0;
+        result = 0;
     }
 
     /**
-     * @return The value that should currently be displayed
-     * on the calculator display.
+     * @return The value that should currently be displayed on the calculator display.
      */
     public int getDisplayValue()
     {
-        return 0;
+        return result;
     }
 
     /**
      * A number button was pressed.
-     * Either start a new operand, or incorporate this number as
-     * the least significant digit of an existing one.
+     * Start a new operand, or incorporate this number as the least significant digit of an existing one.
      * @param number The number pressed on the calculator.
      */
     public void numberPressed(int number)
     {
+        result = (result * 10) + number;
     }
 
     /**
@@ -39,6 +46,9 @@ public class CalcEngine
      */
     public void plus()
     {
+        operator = '+';
+        operand += result;
+        result = 0;
     }
 
     /**
@@ -53,10 +63,21 @@ public class CalcEngine
      */
     public void equals()
     {
+        switch (operator) {
+            case ADD:
+                result = operand + result;
+                break;
+            case SUB:
+                result = operand - result;
+                break;
+        }
+        
+        operand = 0;
     }
 
     /**
      * The 'C' (clear) button was pressed.
+     * Reset class fields to their initial values.
      */
     public void clear()
     {
