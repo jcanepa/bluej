@@ -16,33 +16,34 @@ public class LabClass
     private int capacity;
     
     /**
-     * Create a LabClass with a maximum number of enrolments. All other details
-     * are set to default values.
+     * Create a class with a maximum number of enrolments.
+     * All other details are set to default values.
      */
     public LabClass(int maxNumberOfStudents)
     {
-        instructor = "unknown";
         room = "unknown";
+        instructor = "unknown";
         timeAndDay = "unknown";
-        students = new ArrayList<Student>();
         capacity = maxNumberOfStudents;
+        students = new ArrayList<Student>();
     }
-
+    
     /**
-     * Add a student to this LabClass.
+     * Add a student.
      */
     public void enrollStudent(Student newStudent)
     {
-        if(students.size() == capacity) {
-            System.out.println("The class is full, you cannot enrol.");
-        }
-        else {
+        if (students.size() == capacity) {
+            
+            System.out.println(
+                "The class is full, you cannot enroll.");
+        } else {
             students.add(newStudent);
         }
     }
     
     /**
-     * Return the number of students currently enrolled in this LabClass.
+     * Return the number of students currently enrolled.
      */
     public int numberOfStudents()
     {
@@ -50,7 +51,7 @@ public class LabClass
     }
     
     /**
-     * Set the room number for this LabClass.
+     * Set the room number.
      */
     public void setRoom(String roomNumber)
     {
@@ -58,8 +59,8 @@ public class LabClass
     }
     
     /**
-     * Set the time for this LabClass. The parameter should define the day
-     * and the time of day, such as "Friday, 10am".
+     * Set the time for this LabClass.
+     * @param timeAndDayString Should define the day and time. Ex: "Friday, 10am".
      */
     public void setTime(String timeAndDayString)
     {
@@ -75,17 +76,23 @@ public class LabClass
     }
     
     /**
-     * Print out a class list with other LabClass details to the standard
-     * terminal.
+     * Print out a class list with details.
      */
     public void printList()
     {
         System.out.println("Lab class " + timeAndDay);
-        System.out.println("Instructor: " + instructor + "   Room: " + room);
+        System.out.println("Instructor: " + instructor);
+        System.out.println("Room: " + room);
+        
         System.out.println("Class list:");
-        for(Student student : students) {
+        
+        for (Student student : students) {
             student.print();
         }
-        System.out.println("Number of students: " + numberOfStudents());
+        
+        System.out.println(
+            "Number of students: " + 
+            numberOfStudents()
+        );
     }
 }

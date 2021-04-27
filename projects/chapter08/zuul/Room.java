@@ -29,12 +29,13 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
-        exits = new HashMap<>();
+        exits = new HashMap<>(4);
         items = new ArrayList<Item>();
     }
 
     /**
      * Define an exit from this room.
+     * 
      * @param direction The direction of the exit.
      * @param neighbor  The room to which the exit leads.
      */

@@ -13,7 +13,7 @@ public class Shopper
     private Room location;
     private final Cart cart;
     
-    // transporter shit
+    // transporter beamer
     private Room origin;
     
     public Shopper(Room startingPosition)
@@ -113,12 +113,6 @@ public class Shopper
      */
     private String getCartContents()
     {
-        /*
-        return cart.stream()
-                   .map(item -> item.toString())
-                   .collect(Collectors.joining("\n"));
-        */
-
        String list = ""; 
        
         for (int i = 0; i < cart.getItemCount(); i++) {

@@ -5,13 +5,10 @@ import java.util.ArrayList;
  * social network application.
  * 
  * Display of the posts is currently simulated by printing the
- * details to the terminal. (Later, this should display in a browser.)
+ * details to the terminal.
  * 
- * This version does not save the data to disk, and it does not
- * provide any search or ordering functions.
- * 
- * @author Michael Kölling and David J. Barnes
- * @version 0.2
+ * @author Julian Canepa
+ * @version April 25, 2021
  */
 public class NewsFeed
 {
@@ -36,16 +33,14 @@ public class NewsFeed
     }
 
     /**
-     * Show the news feed. Currently: print the news feed details
-     * to the terminal. (To do: replace this later with display
-     * in web browser.)
+     * Display all posts.
      */
     public void show()
     {
-        // display all posts
-        for(Post post : posts) {
+        for (Post post : posts) {
+            
             post.display();
-            System.out.println();   // empty line between posts
+            System.out.println();
         }
     }
 }

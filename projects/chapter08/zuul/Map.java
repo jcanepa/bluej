@@ -12,9 +12,11 @@ public class Map
 {
     private Room entrance;
     private Room[][] layout;
+    private TransporterRoom transporter;
 
     public Map()
     {
+        /*
         layout = new Room[][] {
             new Room[] {
                 new Room("Appliances"),
@@ -36,95 +38,17 @@ public class Map
         connectRooms();
         
         setEntrance(layout[2][0]);
-        
-        // add items to various rooms
+        */
+       
+        createRooms();
     }
     
-    /**
-     * Build exits between rooms.
-     */
-    private void connectRooms()
-    {
-        for (int row = 0; row < layout.length; row++) {
-            
-            for (int col = 0; col < layout[row].length; col++) {
-                
-                Room room = layout[row][col];
-                
-                /*
-                 * north exit
-                 */
-                if (!isOnNorthWall(room)) {
-                    
-                    // add an exit to the room above
-                    room.setExit(
-                        "north", 
-                        layout[row - 1][col]
-                    );
-                }
-
-                /*
-                 * east exit
-                 */
-                if (!isOnEastWall(room)) {
-                    
-                    // add an exit to the room below
-                    room.setExit(
-                        "east", 
-                        layout[row][col + 1]
-                    );
-                }
-                
-                /*
-                 * south exit
-                 */
-                if (!isOnSouthWall(room)) {
-                    
-                    // add an exit to the room below
-                    room.setExit(
-                        "south", 
-                        layout[row + 1][col]
-                    );
-                }
-                
-                /*
-                 * west exit
-                 */
-                if (!isOnWestWall(room)) {
-                    
-                    // add an exit to the room below
-                    room.setExit(
-                        "west", 
-                        layout[row][col - 1]
-                    );
-                }
-            }
-        }
-    }
-    
-    /**
-     * Print the map.
-     */
-    public void printLayout()
-    {
-        for (Room[] row : layout) {
-
-            for (Room room : row) {
-                System.out.print(room);
-            }
-
-            System.out.println();
-        }
-    }
     /**
      * Create all the rooms and link their exits together.
      * Place items around the map.
      */
     private void createRooms()
     {
-        // create the store's departments and initialize their exits
-        final var transporter = new TransporterRoom();
-        
         final var appliances = new Room("Appliances (north west)");
         final var athletics = new Room("Athletic clothing & sports (north center)");
         final var audio = new Room("Audio department (north east)");
@@ -182,7 +106,85 @@ public class Map
         // add gift cards to the room
         checkout.addItem("Gift card", -100);
         
+        // create the store's departments and initialize their exits
+        transporter = new TransporterRoom(checkout);
+        transporter.setExit("south", audio);
+        audio.setExit("north", transporter);
+        
         entrance = checkout;
+    }
+    
+    /**
+     * Build exits between rooms on the map's layout.
+     */
+    private void connectRooms()
+    {
+        for (int row = 0; row < layout.length; row++) {
+            
+            for (int col = 0; col < layout[row].length; col++) {
+                
+                Room room = layout[row][col];
+                
+                /*
+                 * Add a north exit to the room above
+                 */
+                if (!isOnNorthWall(room)) {
+                    
+                    room.setExit(
+                        "north", 
+                        layout[row - 1][col]
+                    );
+                }
+
+                /*
+                 * Add an east exit to the room on the right.
+                 */
+                if (!isOnEastWall(room)) {
+                    
+                    room.setExit(
+                        "east", 
+                        layout[row][col + 1]
+                    );
+                }
+                
+                /*
+                 * Add a south exit to the room below.
+                 */
+                if (!isOnSouthWall(room)) {
+                    
+                    room.setExit(
+                        "south", 
+                        layout[row + 1][col]
+                    );
+                }
+                
+                /*
+                 * Add a west exit to the room to the left.
+                 */
+                if (!isOnWestWall(room)) {
+                    
+                    room.setExit(
+                        "west", 
+                        layout[row][col - 1]
+                    );
+                }
+            }
+        }
+    }
+    
+    /**
+     * Print the map.
+     */
+    public void printLayout()
+    {
+        for (Room[] row : layout) {
+
+            for (Room room : row) {
+                System.out.print(room);
+            }
+
+            System.out.println();
+        }
     }
 
     /**

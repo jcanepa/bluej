@@ -5,15 +5,14 @@ import java.util.ArrayList;
  * social network. Posts can be stored and displayed. This class
  * serves as a superclass for more specific post types.
  * 
- * @author Michael Kölling and David J. Barnes
- * @version 0.2
+ * @author Julian Canepa
+ * @version April 25, 2021
  */
 public class Post 
 {
     private String username;  // username of the post's author
     private long timestamp;
     private int likes;
-    private ArrayList<String> comments;
 
     /**
      * Constructor for objects of class Post.
@@ -22,38 +21,9 @@ public class Post
      */
     public Post(String author)
     {
+        likes = 0;
         username = author;
         timestamp = System.currentTimeMillis();
-        likes = 0;
-        comments = new ArrayList<>();
-    }
-
-    /**
-     * Record one more 'Like' indication from a user.
-     */
-    public void like()
-    {
-        likes++;
-    }
-
-    /**
-     * Record that a user has withdrawn his/her 'Like' vote.
-     */
-    public void unlike()
-    {
-        if (likes > 0) {
-            likes--;
-        }
-    }
-
-    /**
-     * Add a comment to this post.
-     * 
-     * @param text  The new comment to add.
-     */
-    public void addComment(String text)
-    {
-        comments.add(text);
     }
 
     /**
@@ -75,31 +45,30 @@ public class Post
     {
         return username;
     }
+    
+    /**
+     * Return the number of likes.
+     */
+    protected String getLikes()
+    {
+        String string = "";
+        
+        if (likes > 0) {
+            string += likes + " people like this.";
+        }
+        
+        return string;
+    }
 
     /**
      * Display the details of this post.
-     * 
-     * (Currently: Print to the text terminal. This is simulating display 
-     * in a web browser for now.)
+     * Print to the text terminal to simulate display web browser.
      */
     public void display()
     {
         System.out.println(username);
         System.out.print(timeString(timestamp));
-        
-        if(likes > 0) {
-            System.out.println("  -  " + likes + " people like this.");
-        }
-        else {
-            System.out.println();
-        }
-        
-        if(comments.isEmpty()) {
-            System.out.println("   No comments.");
-        }
-        else {
-            System.out.println("   " + comments.size() + " comment(s). Click here to view.");
-        }
+        System.out.println(getLikes());
     }
     
     /**
@@ -111,17 +80,35 @@ public class Post
      * @return      A relative time string for the given time
      */
     
-    private String timeString(long time)
+    protected String timeString(long time)
     {
         long current = System.currentTimeMillis();
         long pastMillis = current - time;      // time passed in milliseconds
         long seconds = pastMillis/1000;
         long minutes = seconds/60;
-        if(minutes > 0) {
+        
+        if (minutes > 0) {
             return minutes + " minutes ago";
-        }
-        else {
+        } else {
             return seconds + " seconds ago";
+        }
+    }
+    
+    /**
+     * Record one more 'Like' indication from a user.
+     */
+    public void like()
+    {
+        likes ++;
+    }
+
+    /**
+     * Record that a user has withdrawn his/her 'Like' vote.
+     */
+    public void unlike()
+    {
+        if (likes > 0) {
+            likes --;
         }
     }
     
@@ -135,13 +122,5 @@ public class Post
                    .replaceAll(
                        "(.)([A-Z])", 
                        "$1 $2");
-    }
-    
-    /**
-     * Print a summary of the post.
-     */
-    public void printShortSummary()
-    {
-        System.out.println( getClassName() + " from " + getUsername());
     }
 }

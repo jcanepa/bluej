@@ -3,13 +3,11 @@
  * The Student class represents a student in a student administration system.
  * It holds the student details relevant in our context.
  * 
- * @author Michael Kölling and David Barnes
- * @version 2016.02.29
+ * @author Julian Canepa
+ * @version April 25, 2021
  */
-public class Student
+public class Student extends Participant
 {
-    // the student's full name
-    private String name;
     // the student ID
     private String id;
     // the amount of credits for study taken so far
@@ -19,34 +17,19 @@ public class Student
      * Create a new student with a given name and ID number.
      */
     public Student(String fullName, String studentID)
-    {        
-        if(fullName.length() < 4) {
+    {
+        super(fullName);
+        
+        if (fullName.length() < 4) {
             System.out.println("Name too short to generate user ID.");
         }
         
-        if(studentID.length() < 3) {
+        if (studentID.length() < 3) {
             System.out.println("Student ID is not of sufficient length.");
         }
 
-        name = fullName;
         id = studentID;
         credits = 0;
-    }
-
-    /**
-     * Return the full name of this student.
-     */
-    public String getName()
-    {
-        return name;
-    }
-
-    /**
-     * Set a new name for this student.
-     */
-    public void changeName(String replacementName)
-    {
-        name = replacementName;
     }
 
     /**
@@ -81,18 +64,23 @@ public class Student
     public String getLoginName()
     {
         String login;
-        boolean nameLengthIsValid = name.length() >= 4;
+        
+        boolean nameLengthIsValid = getName().length() >= 4;
         boolean idLengthIsValid = id.length() >= 3;
         
-        if(nameLengthIsValid) {
-            login = name.substring(0,4);
+        if (nameLengthIsValid) {
+            
+            login = getName().substring(0,4);
         } else {
-            login = name;
+            
+            login = getName();
         }
         
-        if(idLengthIsValid) {
+        if (idLengthIsValid) {
+            
             return login + id.substring(0,3);
         }
+        
         return login += id;
     }
     
@@ -101,6 +89,10 @@ public class Student
      */
     public void print()
     {
-        System.out.println(name + ", student ID: " + id + ", credits: " + credits);
+        System.out.println(
+            getName() + 
+            ", student ID: " + id + 
+            ", credits: " + credits
+        );
     }
 }

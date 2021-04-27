@@ -27,8 +27,7 @@ public class Game
         store = new Map();
         tracker = new MoveTracker();
         parser = new Parser();
-        shopper = new Shopper(
-            store.getEntrance());
+        shopper = new Shopper(store.getEntrance());
     }
 
     /**
@@ -48,7 +47,7 @@ public class Game
             moves = tracker.getMoves();
         }
         
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Game over! Thank you for playing.");
     }
 
     /**
@@ -77,7 +76,9 @@ public class Game
     private void printLocationInfo()
     {
         System.out.println(
-            shopper.getLocation().getLongDescription());
+            shopper.getLocation()
+                   .getLongDescription()
+        );
     }
 
     /**
@@ -141,7 +142,6 @@ public class Game
         System.out.println("with fellow shoppers to bolster your wallet as much as possible.");
         System.out.println("Your goal is to make as much profit as you can by the time the store closes.");
         System.out.println();
-
         System.out.println("Your command words are:");
         System.out.println(parser.getCommandsList());
     }
@@ -185,7 +185,9 @@ public class Game
     private void back()
     {
         if (! tracker.isEmpty()) {
-            move(tracker.getDirectionBack());
+
+            shopper.move(tracker.getDirectionBack());
+            printLocationInfo();
 
         } else {
             System.out.println(
