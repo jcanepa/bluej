@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * The map is responsible for the store's layout.
@@ -11,11 +12,7 @@ import java.util.ArrayList;
 public class Map
 {
     private Room entrance;
-    private Room[][] layout;
-
-    public Map()
-    {
-        layout = new Room[][] {
+    private final Room[][] layout = new Room[][] {
             new Room[] {
                 new Room("Appliances"),
                 new Room("Audio"),
@@ -23,7 +20,7 @@ public class Map
             },
             new Room[] {
                 new Room("Batteries"),
-                new Room("Bedroom"),
+                new Room("Bikes"),
                 new Room("Books"),
             },
             new Room[] {
@@ -32,17 +29,67 @@ public class Map
                 new Room("Computers"),
             }
         };
-        
+
+    /**
+     * Set up the initial state of the map's layout.
+     */
+    public Map()
+    {
         connectRooms();
+
+        setEntranceToRoom("Checkout");
         
-        setEntrance(layout[2][0]);
-        
-        if (layout[0][2] instanceof TransporterRoom) {
-            var transport = (TransporterRoom) layout[0][2];
-            transport.setDestination(entrance);
-        }
+        setTransporterDestination();
         
         addItems();
+    }
+    
+    /**
+     * Set the map's entrance to a room in the layout with a given description.
+     */
+    private void setEntranceToRoom(String roomDescription)
+    {
+        for (Room[] column : layout) {
+            
+            for (Room room : column) {
+                
+                if (room.getDescription().equals(roomDescription)) {
+                    
+                    setEntrance(room);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Set the map's transporter room to a random destination.
+     */
+    private void setTransporterDestination()
+    {
+        for (Room[] column : layout) {
+            
+            for (Room room : column) {
+                
+                if (room instanceof TransporterRoom) {
+
+                    var transport = (TransporterRoom) room;
+                    transport.setupMap(this);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Return a random room in the layout.
+     */
+    public Room getRandomRoom()
+    {
+        Random rnd = new Random();
+        
+        int row = rnd.nextInt(2);
+        int col = rnd.nextInt(2);
+        
+        return layout[row][col];
     }
     
     /**

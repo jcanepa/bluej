@@ -41,7 +41,7 @@ public class Game
         boolean finished = false;
         int moves = 0;
 
-        while (! finished && moves < 15) {
+        while (! finished && moves < 99) {
             Command command = parser.getCommand();
             finished = processCommand(command);
             moves = tracker.getMoves();
