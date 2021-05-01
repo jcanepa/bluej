@@ -9,10 +9,10 @@ import java.util.Random;
  * @author Julian Canepa
  * @version April 9, 2021
  */
-public class Map
+public final class Map
 {
     private Room entrance;
-    private final Room[][] layout = new Room[][] {
+    private static final Room[][] layout = new Room[][] {
             new Room[] {
                 new Room("Appliances"),
                 new Room("Audio"),
@@ -39,8 +39,6 @@ public class Map
 
         setEntranceToRoom("Checkout");
         
-        setTransporterDestination();
-        
         addItems();
     }
     
@@ -62,27 +60,9 @@ public class Map
     }
     
     /**
-     * Set the map's transporter room to a random destination.
-     */
-    private void setTransporterDestination()
-    {
-        for (Room[] column : layout) {
-            
-            for (Room room : column) {
-                
-                if (room instanceof TransporterRoom) {
-
-                    var transport = (TransporterRoom) room;
-                    transport.setupMap(this);
-                }
-            }
-        }
-    }
-    
-    /**
      * Return a random room in the layout.
      */
-    public Room getRandomRoom()
+    public static Room getRandomRoom()
     {
         Random rnd = new Random();
         
