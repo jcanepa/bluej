@@ -91,6 +91,18 @@ public class Room
     
     /**
      * Place an item in the room.
+     * @param name The item's name.
+     * @param price The cost of the item in dollars.
+     */
+    public void addCoupon(int price)
+    {
+        items.add(
+            new Coupon(price)
+        );
+    }
+    
+    /**
+     * Place an item in the room.
      * @param item The item to add.
      */
     public void addItem(Item item)

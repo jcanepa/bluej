@@ -11,7 +11,7 @@ import java.util.Random;
  */
 public final class Map
 {
-    private Room entrance;
+    private static Room entrance;
     private static final Room[][] layout = new Room[][] {
             new Room[] {
                 new Room("Appliances"),
@@ -37,7 +37,7 @@ public final class Map
     {
         connectRooms();
 
-        setEntranceToRoom("Checkout");
+        setEntranceToDescribed("Checkout");
         
         addItems();
     }
@@ -45,7 +45,7 @@ public final class Map
     /**
      * Set the map's entrance to a room in the layout with a given description.
      */
-    private void setEntranceToRoom(String roomDescription)
+    private void setEntranceToDescribed(String roomDescription)
     {
         for (Room[] column : layout) {
             
