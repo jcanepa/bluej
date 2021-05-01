@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * This class is part of the "Black Market Friday" application,
  * a very simple, text based adventure game.
@@ -11,45 +13,63 @@
 
 public class CommandWords
 {
-    private static final String[] validCommands = {
-        "go", "quit", "help", "search", "wallet", "back", "take", "drop", "equip", "fire"
-    };
+    // A mapping between a command word and the CommandWord associated with it.
+    private HashMap<String, CommandWord> validCommands;
 
-    /**
-     * Constructor - initialise the command words.
-     */
     public CommandWords()
     {
-        //
+        validCommands = new HashMap<>();
+
+        for (CommandWord command : CommandWord.values()) {
+            
+            if (command != CommandWord.UNKNOWN) {
+                
+                validCommands.put(command.toString(), command);
+            }
+        }
     }
 
+    /**
+     * Find the CommandWord associated with a command word.
+     * 
+     * @param commandWord The word to look up
+     * @return The CommandWord correspondng to commandWord | UNKNOWN if not valid
+     */
+    public CommandWord getCommandWord(String commandWord)
+    {
+        CommandWord command = validCommands.get(commandWord);
+
+        if (command != null) {
+
+            return command;
+
+        } else {
+            
+            return CommandWord.UNKNOWN;
+        }
+    }
+    
     /**
      * Check whether a given String is a valid command word. 
      * @return true if it is, false if it isn't.
      */
     public boolean isCommand(String string)
     {
-        for (int i = 0; i < validCommands.length; i++) {
-
-            if (validCommands[i].equals(string)) return true;
-        }
-        
-        // if we get here, the string was not found in the commands
-        return false;
+        return validCommands.containsKey(string);
     }
 
     /**
-     * Return a list of all valid commands.
-     * @return a String of registered commands.
+     * Print all valid commands to System.out.
      */
-    public String getList() 
+    public String showAll() 
     {
-        String list = "";
+        String commands = "";
         
-        for (String command: validCommands) {
-            list += command + " ";
-        }
+        for (String command : validCommands.keySet()) {
 
-        return list;
+            commands += command + "  ";
+        }
+        
+        return commands;
     }
 }

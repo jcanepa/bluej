@@ -15,31 +15,7 @@ public class Map
     private TransporterRoom transporter;
 
     public Map()
-    {
-        /*
-        layout = new Room[][] {
-            new Room[] {
-                new Room("Appliances"),
-                new Room("Athletic"),
-                new Room("Audio"),
-            },
-            new Room[] {
-                new Room("Bedroom"),
-                new Room("Bathroom"),
-                new Room("Baby"),
-            },
-            new Room[] {
-                new Room("Checkout"),
-                new Room("Camping"),
-                new Room("Computer"),
-            }
-        };
-        
-        connectRooms();
-        
-        setEntrance(layout[2][0]);
-        */
-       
+    {       
         createRooms();
     }
     
@@ -115,76 +91,12 @@ public class Map
     }
     
     /**
-     * Build exits between rooms on the map's layout.
+     * Create a new room with a given description
+     * @param description Details of the room including name and purpose.
      */
-    private void connectRooms()
+    private void createRoom(String description)
     {
-        for (int row = 0; row < layout.length; row++) {
-            
-            for (int col = 0; col < layout[row].length; col++) {
-                
-                Room room = layout[row][col];
-                
-                /*
-                 * Add a north exit to the room above
-                 */
-                if (!isOnNorthWall(room)) {
-                    
-                    room.setExit(
-                        "north", 
-                        layout[row - 1][col]
-                    );
-                }
-
-                /*
-                 * Add an east exit to the room on the right.
-                 */
-                if (!isOnEastWall(room)) {
-                    
-                    room.setExit(
-                        "east", 
-                        layout[row][col + 1]
-                    );
-                }
-                
-                /*
-                 * Add a south exit to the room below.
-                 */
-                if (!isOnSouthWall(room)) {
-                    
-                    room.setExit(
-                        "south", 
-                        layout[row + 1][col]
-                    );
-                }
-                
-                /*
-                 * Add a west exit to the room to the left.
-                 */
-                if (!isOnWestWall(room)) {
-                    
-                    room.setExit(
-                        "west", 
-                        layout[row][col - 1]
-                    );
-                }
-            }
-        }
-    }
-    
-    /**
-     * Print the map.
-     */
-    public void printLayout()
-    {
-        for (Room[] row : layout) {
-
-            for (Room room : row) {
-                System.out.print(room);
-            }
-
-            System.out.println();
-        }
+        new Room(description);
     }
 
     /**
@@ -201,61 +113,5 @@ public class Map
     public Room getEntrance()
     {
         return entrance;
-    }
-    
-    /**
-     * Deturmine if a given room is in the first row.
-     */
-    private boolean isOnNorthWall(Room room)
-    {
-        for (Room northRoom : layout[0]) {
-            if (northRoom == room) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-        /**
-     * Deturmine if a given room is in the last row.
-     */
-    private boolean isOnSouthWall(Room room)
-    {
-        for (Room southRoom : layout[2]) {
-            if (southRoom == room) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-    
-        /**
-     * Deturmine if a given room is in the first row.
-     */
-    private boolean isOnEastWall(Room room)
-    {
-        for (int i = 0; i < 3; i++) {
-            if (layout[i][2] == room) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-    
-        /**
-     * Deturmine if a given room is in the first row.
-     */
-    private boolean isOnWestWall(Room room)
-    {
-        for (int i = 0; i < 3; i++) {
-            if (layout[i][0] == room) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

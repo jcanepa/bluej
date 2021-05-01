@@ -25,8 +25,8 @@ public class Game
     public Game()
     {
         store = new Map();
-        tracker = new MoveTracker();
         parser = new Parser();
+        tracker = new MoveTracker();
         shopper = new Shopper(store.getEntrance());
     }
 
@@ -58,13 +58,11 @@ public class Game
         System.out.println();
         System.out.println("Welcome to Black Market Friday!");
         System.out.println();
-        
         System.out.println("You are one of many shoppers hunting a store for discounted computers.");
         System.out.println("Search around to find items and take them to checkout to purchase, ");
         System.out.println("or wheel and deal with fellow shoppers to bolster your wallet.");
         System.out.println("Your goal is to make as much profit as you can by the time the store closes.");
         System.out.println();
-        
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         printLocationInfo();
@@ -90,43 +88,52 @@ public class Game
     {
         boolean wantToQuit = false;
 
-        if (command.isUnknown()) {
-
-            System.out.println("I don't know what you mean...");
-            return false;
-        }
-
-        String commandWord = command.getCommandWord();
+        CommandWord commandWord = command.getCommandWord();
         
-        if (commandWord.equals("help")) {
-            printHelp();
-            
-        } else if (commandWord.equals("go")) {
-            goRoom(command);
-            
-        } else if (commandWord.equals("quit")) {
-            wantToQuit = quit(command);
+        switch (commandWord) {
+            case UNKNOWN:
+                System.out.println("I don't know what you mean...");
+                break;
 
-        } else if (commandWord.equals("search")) {
-            search();
-            
-        } else if (commandWord.equals("wallet")) {
-            wallet();
-            
-        } else if (commandWord.equals("back")) {
-            back();
-            
-        } else if (commandWord.equals("take")) {
-            takeItem(command);
-            
-        } else if (commandWord.equals("drop")) {
-            dropItem(command);
-            
-        } else if (commandWord.equals("equip")) {
-            shopper.equipBeamer();
-            
-        } else if (commandWord.equals("fire")) {
-            shopper.fireBeamer();
+            case HELP:
+                printHelp();
+                break;
+
+            case GO:
+                goRoom(command);
+                break;
+
+            case SEARCH:
+                search();
+                break;
+                
+            case WALLET:
+                wallet();
+                break;
+                
+            case BACK:
+                back();
+                break;
+                
+            case TAKE:
+                takeItem(command);
+                break;
+                
+            case DROP:
+                dropItem(command);
+                break;
+                
+            case EQUIP:
+                shopper.equipBeamer();
+                break;
+                
+            case FIRE:
+                shopper.fireBeamer();
+                break;
+
+            case QUIT:
+                wantToQuit = quit(command);
+                break;
         }
         
         // The command wasn't recognized
@@ -143,7 +150,7 @@ public class Game
         System.out.println("Your goal is to make as much profit as you can by the time the store closes.");
         System.out.println();
         System.out.println("Your command words are:");
-        System.out.println(parser.getCommandsList());
+        System.out.println(parser.showCommands());
     }
 
     /** 
