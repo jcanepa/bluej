@@ -14,23 +14,17 @@ import java.awt.Color;
 public class Simulator
 {
     // Constants representing configuration information for the simulation.
-    // The default width for the grid.
+    // Grid dimentions
     private static final int DEFAULT_WIDTH = 120;
-    // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
-    // The probability that a fox will be created in any given grid position.
     private static final double FOX_CREATION_PROBABILITY = 0.02;
-    // The probability that a rabbit will be created in any given position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
+    private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
     // Lists of animals in the field.
     private List<Rabbit> rabbits;
     private List<Fox> foxes;
-    // The current state of the field.
     private Field field;
-    // The current step of the simulation.
     private int step;
-    // A graphical view of the simulation.
     private SimulatorView view;
     
     /**
@@ -38,7 +32,10 @@ public class Simulator
      */
     public Simulator()
     {
-        this(DEFAULT_DEPTH, DEFAULT_WIDTH);
+        this(
+            DEFAULT_DEPTH, 
+            DEFAULT_WIDTH
+        );
     }
     
     /**
@@ -49,6 +46,7 @@ public class Simulator
     public Simulator(int depth, int width)
     {
         if(width <= 0 || depth <= 0) {
+            
             System.out.println("The dimensions must be >= zero.");
             System.out.println("Using default values.");
             depth = DEFAULT_DEPTH;
@@ -86,7 +84,7 @@ public class Simulator
     {
         for(int step=1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
-            // delay(60);   // uncomment this to run more slowly
+            //delay(60);
         }
     }
     

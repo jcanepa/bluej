@@ -30,10 +30,9 @@ public class Randomizer
      */
     public static Random getRandom()
     {
-        if(useShared) {
+        if (useShared) {
             return rand;
-        }
-        else {
+        } else {
             return new Random();
         }
     }
@@ -44,7 +43,7 @@ public class Randomizer
      */
     public static void reset()
     {
-        if(useShared) {
+        if (useShared) {
             rand.setSeed(SEED);
         }
     }

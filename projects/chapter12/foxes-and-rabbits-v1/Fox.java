@@ -28,14 +28,9 @@ public class Fox
     private static final Random rand = Randomizer.getRandom();
     
     // Individual characteristics (instance fields).
-
-    // The fox's age.
     private int age;
-    // Whether the fox is alive or not.
     private boolean alive;
-    // The fox's position.
     private Location location;
-    // The field occupied.
     private Field field;
     // The fox's food level, which is increased by eating rabbits.
     private int foodLevel;
@@ -54,11 +49,11 @@ public class Fox
         alive = true;
         this.field = field;
         setLocation(location);
-        if(randomAge) {
+        
+        if (randomAge) {
             age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(RABBIT_FOOD_VALUE);
-        }
-        else {
+        } else {
             // leave age at 0
             foodLevel = rand.nextInt(RABBIT_FOOD_VALUE);
         }
@@ -75,19 +70,28 @@ public class Fox
     {
         incrementAge();
         incrementHunger();
-        if(alive) {
-            giveBirth(newFoxes);            
+        
+        if (alive) {
+            
+            giveBirth(newFoxes);
+            
             // Move towards a source of food if found.
             Location newLocation = findFood();
-            if(newLocation == null) { 
+            // Location newLocation = findAllFood();
+            
+            if (newLocation == null) {
+                
                 // No food found - try to move to a free location.
                 newLocation = field.freeAdjacentLocation(location);
             }
-            // See if it was possible to move.
-            if(newLocation != null) {
+            
+            boolean isPossibleToMove = newLocation != null;
+            
+            if (isPossibleToMove) {
+            
                 setLocation(newLocation);
-            }
-            else {
+
+            } else {
                 // Overcrowding.
                 setDead();
             }
@@ -118,9 +122,10 @@ public class Fox
      */
     private void setLocation(Location newLocation)
     {
-        if(location != null) {
+        if (location != null) {
             field.clear(location);
         }
+        
         location = newLocation;
         field.place(this, newLocation);
     }
@@ -131,7 +136,8 @@ public class Fox
     private void incrementAge()
     {
         age++;
-        if(age > MAX_AGE) {
+        
+        if (age > MAX_AGE) {
             setDead();
         }
     }
@@ -142,7 +148,8 @@ public class Fox
     private void incrementHunger()
     {
         foodLevel--;
-        if(foodLevel <= 0) {
+        
+        if (foodLevel <= 0) {
             setDead();
         }
     }
@@ -150,25 +157,62 @@ public class Fox
     /**
      * Look for rabbits adjacent to the current location.
      * Only the first live rabbit is eaten.
+     * 
      * @return Where food was found, or null if it wasn't.
      */
     private Location findFood()
     {
         List<Location> adjacent = field.adjacentLocations(location);
         Iterator<Location> it = adjacent.iterator();
-        while(it.hasNext()) {
+        
+        while (it.hasNext()) {
             Location where = it.next();
             Object animal = field.getObjectAt(where);
-            if(animal instanceof Rabbit) {
+            
+            if (animal instanceof Rabbit) {
                 Rabbit rabbit = (Rabbit) animal;
-                if(rabbit.isAlive()) { 
+                
+                if (rabbit.isAlive()) {
+                    
                     rabbit.setDead();
                     foodLevel = RABBIT_FOOD_VALUE;
                     return where;
                 }
             }
         }
+        
         return null;
+    }
+    
+    /**
+     * Look for rabbits adjacent to the current location.
+     * Rabbits in all adjacent locations will be eaten.
+     * 
+     * @return Where last food was found, or null if no food was found.
+     */
+    private Location findAllFood()
+    {
+        List<Location> adjacent = field.adjacentLocations(location);
+        Iterator<Location> it = adjacent.iterator();
+        
+        Location where = null;
+        
+        while (it.hasNext()) {
+            where = it.next();
+            Object animal = field.getObjectAt(where);
+            
+            if (animal instanceof Rabbit) {
+                Rabbit rabbit = (Rabbit) animal;
+                
+                if (rabbit.isAlive()) {
+                    
+                    rabbit.setDead();
+                    foodLevel += RABBIT_FOOD_VALUE;
+                }
+            }
+        }
+        
+        return where;
     }
     
     /**
@@ -182,7 +226,9 @@ public class Fox
         // Get a list of adjacent free locations.
         List<Location> free = field.getFreeAdjacentLocations(location);
         int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
+        
+        for (int b = 0; b < births && free.size() > 0; b++) {
+            
             Location loc = free.remove(0);
             Fox young = new Fox(false, field, loc);
             newFoxes.add(young);
@@ -197,9 +243,12 @@ public class Fox
     private int breed()
     {
         int births = 0;
-        if(canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
+        
+        if (canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
+            
             births = rand.nextInt(MAX_LITTER_SIZE) + 1;
         }
+        
         return births;
     }
 
@@ -218,7 +267,9 @@ public class Fox
     private void setDead()
     {
         alive = false;
-        if(location != null) {
+        
+        if (location != null) {
+            
             field.clear(location);
             location = null;
             field = null;
