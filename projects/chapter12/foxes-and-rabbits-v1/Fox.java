@@ -51,8 +51,10 @@ public class Fox
         setLocation(location);
         
         if (randomAge) {
+            
             age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(RABBIT_FOOD_VALUE);
+            
         } else {
             // leave age at 0
             foodLevel = rand.nextInt(RABBIT_FOOD_VALUE);

@@ -38,8 +38,10 @@ public class Field
      */
     public void clear()
     {
-        for(int row = 0; row < depth; row++) {
-            for(int col = 0; col < width; col++) {
+        for (int row = 0; row < depth; row++) {
+            
+            for (int col = 0; col < width; col++) {
+                
                 field[row][col] = null;
             }
         }

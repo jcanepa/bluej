@@ -67,8 +67,7 @@ public class Simulator
     }
     
     /**
-     * Run the simulation from its current state for a reasonably long 
-     * period (4000 steps).
+     * Run the simulation from its current state for a reasonably long period (4000 steps).
      */
     public void runLongSimulation()
     {
@@ -78,11 +77,12 @@ public class Simulator
     /**
      * Run the simulation for the given number of steps.
      * Stop before the given number of steps if it ceases to be viable.
+     * 
      * @param numSteps The number of steps to run for.
      */
     public void simulate(int numSteps)
     {
-        for(int step=1; step <= numSteps && view.isViable(field); step++) {
+        for (int step=1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
             //delay(60);
         }
@@ -94,26 +94,32 @@ public class Simulator
      */
     public void simulateOneStep()
     {
-        step++;
+        step ++;
 
         // Provide space for newborn rabbits.
-        List<Rabbit> newRabbits = new ArrayList<>();        
+        List<Rabbit> newRabbits = new ArrayList<>();
+
         // Let all rabbits act.
-        for(Iterator<Rabbit> it = rabbits.iterator(); it.hasNext(); ) {
+        for (Iterator<Rabbit> it = rabbits.iterator(); it.hasNext(); ) {
+
             Rabbit rabbit = it.next();
             rabbit.run(newRabbits);
-            if(! rabbit.isAlive()) {
+            
+            if (! rabbit.isAlive()) {
                 it.remove();
             }
         }
         
         // Provide space for newborn foxes.
-        List<Fox> newFoxes = new ArrayList<>();        
+        List<Fox> newFoxes = new ArrayList<>();
+
         // Let all foxes act.
-        for(Iterator<Fox> it = foxes.iterator(); it.hasNext(); ) {
+        for (Iterator<Fox> it = foxes.iterator(); it.hasNext(); ) {
+            
             Fox fox = it.next();
             fox.hunt(newFoxes);
-            if(! fox.isAlive()) {
+            
+            if (! fox.isAlive()) {
                 it.remove();
             }
         }
@@ -146,16 +152,21 @@ public class Simulator
     {
         Random rand = Randomizer.getRandom();
         field.clear();
-        for(int row = 0; row < field.getDepth(); row++) {
-            for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+
+        for (int row = 0; row < field.getDepth(); row++) {
+            
+            for (int col = 0; col < field.getWidth(); col++) {
+                
+                if (rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                    
                     Location location = new Location(row, col);
-                    Fox fox = new Fox(true, field, location);
+                    Fox fox = new Fox(false, field, location);
                     foxes.add(fox);
-                }
-                else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                    
+                } else if (rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                    
                     Location location = new Location(row, col);
-                    Rabbit rabbit = new Rabbit(true, field, location);
+                    Rabbit rabbit = new Rabbit(false, field, location);
                     rabbits.add(rabbit);
                 }
                 // else leave the location empty.
@@ -171,8 +182,8 @@ public class Simulator
     {
         try {
             Thread.sleep(millisec);
-        }
-        catch (InterruptedException ie) {
+            
+        } catch (InterruptedException ie) {
             // wake up
         }
     }

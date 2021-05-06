@@ -55,7 +55,9 @@ public class Rabbit
         incrementAge();
         
         if (alive) {
-            giveBirth(newRabbits);            
+            
+            giveBirth(newRabbits);
+            
             // Try to move into a free location.
             Location newLocation = field.freeAdjacentLocation(location);
             
@@ -143,11 +145,7 @@ public class Rabbit
         for (int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             
-            Rabbit young = new Rabbit(
-                false, 
-                field, 
-                loc
-            );
+            Rabbit young = new Rabbit(false, field, loc);
             
             newRabbits.add(young);
         }
@@ -162,7 +160,9 @@ public class Rabbit
     {
         int births = 0;
         
-        if (canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
+        if (canBreed() 
+            && rand.nextDouble() <= BREEDING_PROBABILITY) {
+
             births = rand.nextInt(MAX_LITTER_SIZE) + 1;
         }
 
