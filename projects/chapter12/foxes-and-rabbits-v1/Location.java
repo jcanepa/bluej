@@ -26,11 +26,12 @@ public class Location
      */
     public boolean equals(Object obj)
     {
-        if(obj instanceof Location) {
+        if (obj instanceof Location) {
+            
             Location other = (Location) obj;
             return row == other.getRow() && col == other.getCol();
-        }
-        else {
+
+        } else {
             return false;
         }
     }

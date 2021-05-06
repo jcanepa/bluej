@@ -130,6 +130,50 @@ public class Simulator
 
         view.showStatus(step, field);
     }
+    
+    /**
+     * Check field and animal lists match. That is,
+     * no animal (dead or alive) in the field that is not in one of the lists
+     */
+    private boolean doesFieldMatchAnimalLists()
+    {
+        int rows = field.getWidth();
+        int cols = field.getDepth();
+        
+        for (int row = 0; row < rows; row ++) {
+            
+            for (int col = 0; col < cols; col ++) {
+                
+                Object animal = field.getObjectAt(row, col);
+                
+                boolean match1 = foxes.contains(animal);
+                boolean match2 = rabbits.contains(animal);
+                
+                if (animal != null & !(match1 || match2)) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Check field and animal lists match. That is,
+     * no animal (dead or alive) in one of the lists that is not in the field
+     */
+    private boolean doAnimalListsMatchField()
+    {
+        for (Fox fox : foxes) {
+            if (fox != field.getObjectAt(fox.getLocation())) return false;
+        }
+        
+        for (Rabbit rabbit : rabbits) {
+            if (rabbit != field.getObjectAt(rabbit.getLocation())) return false;
+        }
+        
+        return true;
+    }
         
     /**
      * Reset the simulation to a starting position.
