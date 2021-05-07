@@ -30,22 +30,20 @@ public class Randomizer
      */
     public static Random getRandom()
     {
-        if(useShared) {
+        if (useShared) {
             return rand;
-        }
-        else {
+        } else {
             return new Random();
         }
     }
     
     /**
      * Reset the randomization.
-     * This will have no effect if randomization is not through
-     * a shared Random generator.
+     * This will have no effect if randomization is not through a shared Random generator.
      */
     public static void reset()
     {
-        if(useShared) {
+        if (useShared) {
             rand.setSeed(SEED);
         }
     }

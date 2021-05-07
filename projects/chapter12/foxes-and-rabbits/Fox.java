@@ -9,7 +9,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29
  */
-public class Fox
+public class Fox extends Animal
 {
     // Characteristics shared by all foxes (class variables).
     
@@ -29,9 +29,6 @@ public class Fox
     
     // Individual characteristics (instance fields).
     private int age;
-    private boolean alive;
-    private Location location;
-    private Field field;
     // The fox's food level, which is increased by eating rabbits.
     private int foodLevel;
 
@@ -45,10 +42,9 @@ public class Fox
      */
     public Fox(boolean randomAge, Field field, Location location)
     {
+        super(randomAge, field, location);
+        
         age = 0;
-        alive = true;
-        this.field = field;
-        setLocation(location);
         
         if (randomAge) {
             age = rand.nextInt(MAX_AGE);
@@ -72,7 +68,7 @@ public class Fox
         incrementAge();
         incrementHunger();
         
-        if (alive) {
+        if (super.isAlive()) {
             
             giveBirth(newFoxes);
             
@@ -83,7 +79,7 @@ public class Fox
             if (newLocation == null) {
                 
                 // No food found - try to move to a free location.
-                newLocation = field.freeAdjacentLocation(location);
+                newLocation = super.getField().freeAdjacentLocation(super.getLocation());
             }
             
             boolean isPossibleToMove = newLocation != null;
@@ -97,38 +93,6 @@ public class Fox
                 setDead();
             }
         }
-    }
-
-    /**
-     * Check whether the fox is alive or not.
-     * @return True if the fox is still alive.
-     */
-    public boolean isAlive()
-    {
-        return alive;
-    }
-
-    /**
-     * Return the fox's location.
-     * @return The fox's location.
-     */
-    public Location getLocation()
-    {
-        return location;
-    }
-    
-    /**
-     * Place the fox at the new location in the given field.
-     * @param newLocation The fox's new location.
-     */
-    private void setLocation(Location newLocation)
-    {
-        if (location != null) {
-            field.clear(location);
-        }
-        
-        location = newLocation;
-        field.place(this, newLocation);
     }
     
     /**
@@ -163,12 +127,12 @@ public class Fox
      */
     private Location findFood()
     {
-        List<Location> adjacent = field.adjacentLocations(location);
+        List<Location> adjacent = getField().adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
         
         while (it.hasNext()) {
             Location where = it.next();
-            Object animal = field.getObjectAt(where);
+            Object animal = getField().getObjectAt(where);
             
             if (animal instanceof Rabbit) {
                 Rabbit rabbit = (Rabbit) animal;
@@ -193,14 +157,14 @@ public class Fox
      */
     private Location findAllFood()
     {
-        List<Location> adjacent = field.adjacentLocations(location);
+        List<Location> adjacent = getField().adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
         
         Location where = null;
         
         while (it.hasNext()) {
             where = it.next();
-            Object animal = field.getObjectAt(where);
+            Object animal = getField().getObjectAt(where);
             
             if (animal instanceof Rabbit) {
                 Rabbit rabbit = (Rabbit) animal;
@@ -225,13 +189,13 @@ public class Fox
     {
         // New foxes are born into adjacent locations.
         // Get a list of adjacent free locations.
-        List<Location> free = field.getFreeAdjacentLocations(location);
+        List<Location> free = getField().getFreeAdjacentLocations(getLocation());
         int births = breed();
         
         for (int b = 0; b < births && free.size() > 0; b++) {
             
             Location loc = free.remove(0);
-            Fox young = new Fox(false, field, loc);
+            Fox young = new Fox(false, getField(), loc);
             newFoxes.add(young);
         }
     }
@@ -260,21 +224,5 @@ public class Fox
     private boolean canBreed()
     {
         return age >= BREEDING_AGE;
-    }
-
-    /**
-     * Indicate that the fox is no longer alive.
-     * It is removed from the field.
-     */
-    private void setDead()
-    {
-        alive = false;
-        
-        if (location != null) {
-            
-            field.clear(location);
-            location = null;
-            field = null;
-        }
     }
 }
