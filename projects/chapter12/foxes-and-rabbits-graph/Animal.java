@@ -8,11 +8,8 @@ import java.util.List;
  */
 public abstract class Animal
 {
-    // Whether the animal is alive or not.
-    private boolean alive;
-    // The animal's field.
+    private boolean isAlive;
     private Field field;
-    // The animal's position in the field.
     private Location location;
     
     /**
@@ -23,7 +20,7 @@ public abstract class Animal
      */
     public Animal(Field field, Location location)
     {
-        alive = true;
+        isAlive = true;
         this.field = field;
         setLocation(location);
     }
@@ -41,17 +38,18 @@ public abstract class Animal
      */
     protected boolean isAlive()
     {
-        return alive;
+        return isAlive;
     }
 
     /**
-     * Indicate that the animal is no longer alive.
+     * Indicate that the animal is no longer isAlive.
      * It is removed from the field.
      */
     protected void setDead()
     {
-        alive = false;
-        if(location != null) {
+        isAlive = false;
+        
+        if (location != null) {
             field.clear(location);
             location = null;
             field = null;
@@ -73,9 +71,10 @@ public abstract class Animal
      */
     protected void setLocation(Location newLocation)
     {
-        if(location != null) {
+        if (location != null) {
             field.clear(location);
         }
+        
         location = newLocation;
         field.place(this, newLocation);
     }

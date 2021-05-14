@@ -74,11 +74,11 @@ public class SimulatorView extends JFrame
     private Color getColor(Class animalClass)
     {
         Color col = colors.get(animalClass);
-        if(col == null) {
+        
+        if (col == null) {
             // no color defined for this class
             return UNKNOWN_COLOR;
-        }
-        else {
+        } else {
             return col;
         }
     }

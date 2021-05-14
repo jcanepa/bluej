@@ -45,7 +45,7 @@ public class Simulator
      */
     public Simulator(int depth, int width)
     {
-        if(width <= 0 || depth <= 0) {
+        if (width <= 0 || depth <= 0) {
             
             System.out.println("The dimensions must be >= zero.");
             System.out.println("Using default values.");

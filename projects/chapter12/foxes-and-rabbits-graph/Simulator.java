@@ -89,7 +89,7 @@ public class Simulator
      */
     public void simulate(int numSteps)
     {
-        for(int step = 1; step <= numSteps && views.get(0).isViable(field); step++) {
+        for (int step = 1; step <= numSteps && views.get(0).isViable(field); step++) {
             simulateOneStep();
             // delay(60);   // uncomment this to run more slowly
         }
@@ -105,12 +105,14 @@ public class Simulator
         step++;
 
         // Provide space for newborn animals.
-        List<Animal> newAnimals = new ArrayList<>();        
-        // Let all rabbits act.
-        for(Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
+        List<Animal> newAnimals = new ArrayList<>();
+        
+        for (Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
+            
             Animal animal = it.next();
             animal.act(newAnimals);
-            if(! animal.isAlive()) {
+            
+            if (! animal.isAlive()) {
                 it.remove();
             }
         }
@@ -128,6 +130,7 @@ public class Simulator
     {
         step = 0;
         animals.clear();
+        
         for (SimulatorView view : views) {
             view.reset();
         }
@@ -153,14 +156,19 @@ public class Simulator
     {
         Random rand = Randomizer.getRandom();
         field.clear();
-        for(int row = 0; row < field.getDepth(); row++) {
-            for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+        
+        for (int row = 0; row < field.getDepth(); row++) {
+            
+            for (int col = 0; col < field.getWidth(); col++) {
+                
+                if (rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                    
                     Location location = new Location(row, col);
                     Fox fox = new Fox(true, field, location);
                     animals.add(fox);
-                }
-                else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                    
+                } else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                    
                     Location location = new Location(row, col);
                     Rabbit rabbit = new Rabbit(true, field, location);
                     animals.add(rabbit);
@@ -178,8 +186,7 @@ public class Simulator
     {
         try {
             Thread.sleep(millisec);
-        }
-        catch (InterruptedException ie) {
+        } catch (InterruptedException ie) {
             // wake up
         }
     }

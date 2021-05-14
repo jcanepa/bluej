@@ -10,23 +10,11 @@ import java.util.Random;
  */
 public class Rabbit extends Animal
 {
-    // Characteristics shared by all rabbits (class variables).
-
-    // The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a rabbit can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rabbit breeding.
     private static final double BREEDING_PROBABILITY = 0.12;
-    // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-    // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-    
-    // Individual characteristics (instance fields).
-    
-    // The rabbit's age.
-    private int age;
 
     /**
      * Create a new rabbit. A rabbit may be created with age
@@ -39,10 +27,9 @@ public class Rabbit extends Animal
     public Rabbit(boolean randomAge, Field field, Location location)
     {
         super(field, location);
-        age = 0;
-        if(randomAge) {
-            age = rand.nextInt(MAX_AGE);
-        }
+        
+        int age = (randomAge) ? rand.nextInt(MAX_AGE): 0;
+        setAge(age);
     }
     
     /**
@@ -53,14 +40,18 @@ public class Rabbit extends Animal
     public void act(List<Animal> newRabbits)
     {
         incrementAge();
-        if(isAlive()) {
+        
+        if (isAlive()) {
+            
             giveBirth(newRabbits);            
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
-            if(newLocation != null) {
+            
+            if (newLocation != null) {
+                
                 setLocation(newLocation);
-            }
-            else {
+                
+            } else {
                 // Overcrowding.
                 setDead();
             }
@@ -73,8 +64,9 @@ public class Rabbit extends Animal
      */
     private void incrementAge()
     {
-        age++;
-        if(age > MAX_AGE) {
+        setAge(getAge() + 1);
+        
+        if (getAge() > MAX_AGE) {
             setDead();
         }
     }
@@ -86,12 +78,15 @@ public class Rabbit extends Animal
      */
     private void giveBirth(List<Animal> newRabbits)
     {
-        // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
+        
         int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
+        
+        // New rabbits are born into adjacent locations.
+        for (int b = 0; b < births && free.size() > 0; b++) {
+            
             Location loc = free.remove(0);
             Rabbit young = new Rabbit(false, field, loc);
             newRabbits.add(young);
@@ -106,9 +101,11 @@ public class Rabbit extends Animal
     private int breed()
     {
         int births = 0;
-        if(canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
+        
+        if (canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
             births = rand.nextInt(MAX_LITTER_SIZE) + 1;
         }
+        
         return births;
     }
 
@@ -118,6 +115,6 @@ public class Rabbit extends Animal
      */
     private boolean canBreed()
     {
-        return age >= BREEDING_AGE;
+        return getAge() >= BREEDING_AGE;
     }
 }

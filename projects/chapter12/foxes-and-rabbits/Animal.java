@@ -5,7 +5,7 @@
  * @author Julian Canepa
  * @version May 6, 2021
  */
-public class Animal
+abstract public class Animal
 {
     private boolean alive;
     private Location location;
@@ -14,7 +14,7 @@ public class Animal
     /**
      * Constructor for objects of class Animal
      */
-    public Animal(boolean randomAge, Field field, Location location)
+    public Animal(Field field, Location location)
     {
         alive = true;
         this.field = field;
