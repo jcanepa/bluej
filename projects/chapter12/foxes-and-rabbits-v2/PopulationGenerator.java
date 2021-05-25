@@ -11,10 +11,10 @@ import java.util.List;
  */
 public class PopulationGenerator
 {
-    // The probability that a fox will be created in any given grid position.
+    // The probability that a given animal will be created in any given grid position.
     private static final double FOX_CREATION_PROBABILITY = 0.02;
-    // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
+    
     private Field field;
     
     /**

@@ -18,7 +18,7 @@ public class Simulator
 
     private PopulationGenerator nature;
 
-    private List<Animal> animals;
+    private List<Actor> animals;
     private Field field;
     private int step;
     private SimulatorView view;
@@ -92,14 +92,14 @@ public class Simulator
         step++;
 
         // Provide space for newborn animals.
-        List<Animal> newAnimals = new ArrayList<>();        
+        List<Actor> newAnimals = new ArrayList<>();
         
-        for (Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
+        for (Iterator<Actor> it = animals.iterator(); it.hasNext(); ) {
             
-            Animal animal = it.next();
+            Actor animal = it.next();
             animal.act(newAnimals);
             
-            if (! animal.isAlive()) {
+            if (! animal.isActive()) {
                 it.remove();
             }
         }

@@ -10,15 +10,14 @@ import java.util.Random;
  */
 public class Rabbit extends Animal
 {
-    private static final int BREEDING_AGE = 5;
     private static final int MAX_AGE = 40;
-    private static final double BREEDING_PROBABILITY = 0.12;
+    private static final int BREEDING_AGE = 5;
     private static final int MAX_LITTER_SIZE = 4;
-    private static final Random rand = Randomizer.getRandom();
+    private static final double BREEDING_PROBABILITY = 0.12;
 
     /**
-     * Create a new rabbit. A rabbit may be created with age
-     * zero (a new born) or with a random age.
+     * Create a new rabbit. 
+     * A rabbit may be created as a new born or with a random age.
      * 
      * @param randomAge If true, the rabbit will have a random age.
      * @param field The field currently occupied.
@@ -28,22 +27,27 @@ public class Rabbit extends Animal
     {
         super(field, location);
         
-        int age = (randomAge) ? rand.nextInt(MAX_AGE): 0;
+        int age = (randomAge) 
+            ? getRandomInt(MAX_AGE)
+            : 0;
+
         setAge(age);
     }
     
     /**
-     * This is what the rabbit does most of the time - it runs 
-     * around. Sometimes it will breed or die of old age.
+     * This is what the rabbit does: 
+     * it runs around and sometimes breeds or dies of old age.
+     * 
      * @param newRabbits A list to return newly born rabbits.
      */
-    public void act(List<Animal> newRabbits)
+    public void act(List<Actor> newRabbits)
     {
         incrementAge();
         
         if (isAlive()) {
             
-            giveBirth(newRabbits);            
+            giveBirth(newRabbits);
+            
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             
@@ -57,64 +61,32 @@ public class Rabbit extends Animal
             }
         }
     }
-
-    /**
-     * Increase the age.
-     * This could result in the rabbit's death.
-     */
-    private void incrementAge()
-    {
-        setAge(getAge() + 1);
-        
-        if (getAge() > MAX_AGE) {
-            setDead();
-        }
+    
+    @Override
+    protected int getBreedingAge() {
+        return BREEDING_AGE;
     }
     
-    /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
-     */
-    private void giveBirth(List<Animal> newRabbits)
-    {
-        // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        
-        int births = breed();
-        
-        // New rabbits are born into adjacent locations.
-        for (int b = 0; b < births && free.size() > 0; b++) {
-            
-            Location loc = free.remove(0);
-            Rabbit young = new Rabbit(false, field, loc);
-            newRabbits.add(young);
-        }
+    @Override
+    protected int getMaxAge() {
+        return MAX_AGE;
     }
-        
-    /**
-     * Generate a number representing the number of births,
-     * if it can breed.
-     * @return The number of births (may be zero).
-     */
-    private int breed()
-    {
-        int births = 0;
-        
-        if (canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
-            births = rand.nextInt(MAX_LITTER_SIZE) + 1;
-        }
-        
-        return births;
+    
+    @Override
+    protected int getMaxLitterSize() {
+        return MAX_LITTER_SIZE;
     }
-
-    /**
-     * A rabbit can breed if it has reached the breeding age.
-     * @return true if the rabbit can breed, false otherwise.
-     */
-    private boolean canBreed()
-    {
-        return getAge() >= BREEDING_AGE;
+    
+    @Override
+    protected double getBreedingProbability() {
+        return BREEDING_PROBABILITY;
+    }
+    
+    @Override
+    protected Animal getNewAnimal() {
+        return new Rabbit(
+            false, 
+            getField(), 
+            getLocation());
     }
 }
